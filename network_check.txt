@@ -1,94 +1,18 @@
-mephi-2026.domain.local
-
-     Static hostname: mephi-2026.domain.local
-           Icon name: computer-vm
-             Chassis: vm 🖴
-          Machine ID: 0dfdd91d4f034723a5f0f439a45685df
-             Boot ID: ac87fc17d4514f4fb8e1190337344e50
-      Virtualization: qemu
-    Operating System: Fedora Linux 44 (Workstation Edition)
-         CPE OS Name: cpe:/o:fedoraproject:fedora:44
-      OS Support End: Wed 2027-05-19
-OS Support Remaining: 11month 1w
-              Kernel: Linux 6.19.10-300.fc44.aarch64
-        Architecture: arm64
-     Hardware Vendor: QEMU
-      Hardware Model: QEMU Virtual Machine
-    Hardware Version: virt-10.0
-    Firmware Version: 0.0.0
-       Firmware Date: Fri 2015-02-06
-        Firmware Age: 11y 4month 3d
-
-NAME                     UUID                                  TYPE      DEVICE 
-Проводное подключение 1  f555b165-aff1-3112-8158-820e4550715f  ethernet  enp0s1 
-mephi-project-net        8b5c3e72-9dbb-43be-bc9e-6b37cd6bd91a  dummy     mephi0 
-lo                       ff02e768-edfa-41e6-9bf6-6a5a54462c3a  loopback  lo     
-
-ipv4.method:                            manual
-ipv4.dns:                               8.8.8.8
-ipv4.dns-search:                        --
-ipv4.dns-options:                       --
-ipv4.dns-priority:                      0
-ipv4.addresses:                         192.168.1.100/24
-ipv4.gateway:                           192.168.1.1
-ipv4.route-metric:                      900
-ipv4.ignore-auto-dns:                   да
-ipv4.never-default:                     нет
-ipv6.method:                            ignore
-
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet 192.168.1.1/32 scope global lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host noprefixroute 
-       valid_lft forever preferred_lft forever
-2: enp0s1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    link/ether c6:f6:57:08:02:0d brd ff:ff:ff:ff:ff:ff
-    altname enxc6f65708020d
-    inet 192.168.64.4/24 brd 192.168.64.255 scope global dynamic noprefixroute enp0s1
-       valid_lft 3600sec preferred_lft 3600sec
-    inet6 fe80::fe56:ccd7:d3c2:93fb/64 scope link tentative noprefixroute 
-       valid_lft forever preferred_lft forever
-4: mephi0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/ether 56:25:b4:25:40:20 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.1.100/24 brd 192.168.1.255 scope global noprefixroute mephi0
-       valid_lft forever preferred_lft forever
-    inet6 fe80::5425:b4ff:fe25:4020/64 scope link proto kernel_ll 
-       valid_lft forever preferred_lft forever
-
-default via 192.168.64.1 dev enp0s1 proto dhcp src 192.168.64.4 metric 100 
-default via 192.168.1.1 dev mephi0 proto static metric 20900 
-192.168.1.0/24 dev mephi0 proto kernel scope link src 192.168.1.100 metric 900 
-192.168.64.0/24 dev enp0s1 proto kernel scope link src 192.168.64.4 metric 100 
-
-Global:
-Link 2 (enp0s1): 192.168.64.1
-Link 4 (mephi0): 8.8.8.8
-
 PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
-64 bytes from 192.168.1.1: icmp_seq=1 ttl=64 time=0.097 ms
-64 bytes from 192.168.1.1: icmp_seq=2 ttl=64 time=0.173 ms
-64 bytes from 192.168.1.1: icmp_seq=3 ttl=64 time=0.162 ms
-64 bytes from 192.168.1.1: icmp_seq=4 ttl=64 time=0.157 ms
+64 bytes from 192.168.1.1: icmp_seq=1 ttl=255 time=0.299 ms
+64 bytes from 192.168.1.1: icmp_seq=2 ttl=255 time=0.781 ms
+64 bytes from 192.168.1.1: icmp_seq=3 ttl=255 time=0.577 ms
+64 bytes from 192.168.1.1: icmp_seq=4 ttl=255 time=0.650 ms
 
 --- 192.168.1.1 ping statistics ---
-4 packets transmitted, 4 received, 0% packet loss, time 3080ms
-rtt min/avg/max/mdev = 0.097/0.147/0.173/0.029 ms
-
+4 packets transmitted, 4 received, 0% packet loss, time 3103ms
+rtt min/avg/max/mdev = 0.299/0.576/0.781/0.176 ms
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-64 bytes from 8.8.8.8: icmp_seq=1 ttl=105 time=17.8 ms
-64 bytes from 8.8.8.8: icmp_seq=2 ttl=105 time=63.3 ms
-64 bytes from 8.8.8.8: icmp_seq=3 ttl=105 time=11.0 ms
-64 bytes from 8.8.8.8: icmp_seq=4 ttl=105 time=10.7 ms
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=255 time=85.7 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=255 time=9.99 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=255 time=8.73 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=255 time=9.55 ms
 
 --- 8.8.8.8 ping statistics ---
-4 packets transmitted, 4 received, 0% packet loss, time 3010ms
-rtt min/avg/max/mdev = 10.668/25.672/63.255/21.883 ms
-
-Hello from Student: M255948
-
-Hello from Student: M255948
-
-Hello from Student: M255948
+4 packets transmitted, 4 received, 0% packet loss, time 3007ms
+rtt min/avg/max/mdev = 8.727/28.480/85.650/33.009 ms

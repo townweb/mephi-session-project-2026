@@ -1,0 +1,69 @@
+=== OS/HOSTNAME ===
+Fedora release 43 (Forty Three)
+mephi-2026.domain.local
+=== NETWORK ===
+3: enp0s2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    altname enx5e8791e5124d
+    inet 192.168.1.100/24 brd 192.168.1.255 scope global noprefixroute enp0s2
+       valid_lft forever preferred_lft forever
+default via 192.168.1.1 dev enp0s2 proto static metric 50 
+default via 192.168.64.1 dev enp0s1 proto dhcp src 192.168.64.3 metric 500 
+192.168.1.0/24 dev enp0s2 proto kernel scope link src 192.168.1.100 metric 50 
+192.168.64.0/24 dev enp0s1 proto kernel scope link src 192.168.64.3 metric 500 
+8.8.8.8
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_seq=1 ttl=255 time=0.271 ms
+64 bytes from 192.168.1.1: icmp_seq=2 ttl=255 time=0.485 ms
+64 bytes from 192.168.1.1: icmp_seq=3 ttl=255 time=0.400 ms
+64 bytes from 192.168.1.1: icmp_seq=4 ttl=255 time=0.792 ms
+
+--- 192.168.1.1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3106ms
+rtt min/avg/max/mdev = 0.271/0.487/0.792/0.191 ms
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=255 time=10.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=255 time=9.49 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=255 time=9.59 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=255 time=9.67 ms
+
+--- 8.8.8.8 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3013ms
+rtt min/avg/max/mdev = 9.493/9.755/10.273/0.305 ms
+=== DISK/FSTAB ===
+NAME   FSTYPE FSVER LABEL      UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sr0                                                                                
+zram0  swap   1     zram0      b01df3fb-aba4-4c0f-84fb-fb4eac31e545                [SWAP]
+vda                                                                                
+├─vda1 vfat   FAT32            3E0A-A106                             562,3M     6% /boot/efi
+├─vda2 ext4   1.0              55272b75-85f5-4932-94c2-1aa2dd7ac210    1,4G    19% /boot
+└─vda3 btrfs        fedora     fb1dcd8c-c946-4ea9-b572-ad54e921ae55   45,9G    10% /home
+                                                                                   /
+vdb                                                                                
+└─vdb1 ext4   1.0   MEPHI_DATA 21768b2c-4400-419d-aa53-57422aae23dd    7,4G     0% /data/mephi-web
+TARGET          SOURCE    FSTYPE OPTIONS
+/data/mephi-web /dev/vdb1 ext4   rw,relatime,seclabel
+LABEL=MEPHI_DATA /data/mephi-web ext4 defaults 0 2
+=== NGINX ===
+enabled
+active
+<!doctype html><html lang=ru><head><meta charset=UTF-8><title>MEPHI</title></head><body><h1>Hello from Student: М255948</h1></body></html>
+<!doctype html><html lang=ru><head><meta charset=UTF-8><title>MEPHI</title></head><body><h1>Hello from Student: М255948</h1></body></html>
+=== SELINUX ===
+Enforcing
+system_u:object_r:httpd_sys_content_t:s0 /data/mephi-web
+system_u:object_r:httpd_sys_content_t:s0 /data/mephi-web/index.html
+=== DAC ===
+drwxrwsr-x 2775 mephi-admin:mephi-devs /data/mephi-web
+uid=5506(mephi-admin) gid=5507(mephi-admin) группы=5507(mephi-admin),5506(mephi-devs)
+mephi-devs:x:5506:mephi-admin
+=== CAPABILITIES ===
+/usr/sbin/tcpdump cap_net_admin,cap_net_raw=ep
+TCPDUMP_USER_TEST=OK
+=== PAM ===
+/etc/pam.d/login:2:auth required pam_listfile.so item=user sense=deny file=/etc/ssh/denied_users onerr=fail
+/etc/pam.d/sshd:2:auth required pam_listfile.so item=user sense=deny file=/etc/ssh/denied_users onerr=fail
+root
+=== PACKAGES ===
+nginx-1.30.2-1.fc43.aarch64
+tcpdump-4.99.6-2.fc43.aarch64
+libcap-ng-utils-0.9.3-1.fc43.aarch64

@@ -1,0 +1,2 @@
+default via 192.168.64.1 dev enp0s1 proto dhcp src 192.168.64.3 metric 100 
+192.168.64.0/24 dev enp0s1 proto kernel scope link src 192.168.64.3 metric 100 

@@ -1,0 +1,18 @@
++ test -f /usr/lib64/security/pam_listfile.so
++ install -o root -g root -m 0600 /dev/null /etc/ssh/denied_users
++ printf '%s\n' root
++ for pam_file in /etc/pam.d/login /etc/pam.d/sshd
++ cp -a /etc/pam.d/login /etc/pam.d/login.before-mephi
++ grep -Fq pam_listfile.so /etc/pam.d/login
++ sed -i '1a auth required pam_listfile.so item=user sense=deny file=/etc/ssh/denied_users onerr=fail' /etc/pam.d/login
++ for pam_file in /etc/pam.d/login /etc/pam.d/sshd
++ cp -a /etc/pam.d/sshd /etc/pam.d/sshd.before-mephi
++ grep -Fq pam_listfile.so /etc/pam.d/sshd
++ sed -i '1a auth required pam_listfile.so item=user sense=deny file=/etc/ssh/denied_users onerr=fail' /etc/pam.d/sshd
++ restorecon -v /etc/ssh/denied_users /etc/pam.d/login /etc/pam.d/sshd
++ sshd -t
++ grep -Hn pam_listfile.so /etc/pam.d/login /etc/pam.d/sshd
+/etc/pam.d/login:2:auth required pam_listfile.so item=user sense=deny file=/etc/ssh/denied_users onerr=fail
+/etc/pam.d/sshd:2:auth required pam_listfile.so item=user sense=deny file=/etc/ssh/denied_users onerr=fail
++ cat /etc/ssh/denied_users
+root
