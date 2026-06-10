@@ -2,7 +2,11 @@
 set -euo pipefail
 
 P=/home/yar/mephi-session-project-2026
-TARGET_IFACE=${TARGET_IFACE:-enp0s2}
+TARGET_IFACE=${TARGET_IFACE:-$(nmcli -t -f DEVICE,TYPE device status | awk -F: '$2 == "ethernet" && $1 != "--" {print $1; exit}')}
+if [ -z "${TARGET_IFACE:-}" ]; then
+  echo "No ethernet device found" >&2
+  exit 1
+fi
 TARGET_HOSTNAME=mephi-2026.domain.local
 
 get_active_connection() {

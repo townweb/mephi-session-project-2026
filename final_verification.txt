@@ -8,8 +8,8 @@ ipv4.dns-priority:                      0
 ipv4.addresses:                         192.168.1.100/24
 ipv4.gateway:                           192.168.1.1
 ipv4.route-metric:                      900
-ipv4.ignore-auto-dns:                   да
-ipv4.never-default:                     нет
+ipv4.ignore-auto-dns:                   yes
+ipv4.never-default:                     no
 ipv6.method:                            ignore
 
 4: mephi0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000

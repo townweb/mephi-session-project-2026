@@ -1,23 +1,55 @@
-1. Проверено состояние дисков.
-2. На диске /dev/sdb создан раздел /dev/sdb1.
-3. Раздел /dev/sdb1 отформатирован в ext4.
-4. Для файловой системы задана метка MEPHI_DATA.
-5. Создан каталог /data/mephi-web.
-6. В /etc/fstab добавлено монтирование /data/mephi-web по метке MEPHI_DATA.
-7. Выполнено монтирование /data/mephi-web.
-8. Задано имя хоста mephi-2026.domain.local.
-9. Настроены статические параметры IPv4.
-10. Установлены nginx, tcpdump и libcap-ng-utils.
-11. Сохранён RPM-пакет tcpdump.
-12. Создана группа mephi-devs.
-13. Создан пользователь mephi-admin.
-14. Пользователь mephi-admin добавлен в группу mephi-devs.
-15. Для /data/mephi-web настроены владелец, группа и права доступа.
-16. Создан файл index.html.
-17. Настроен nginx для раздачи файлов из /data/mephi-web.
-18. Для /data/mephi-web настроен SELinux-контекст httpd_sys_content_t.
-19. Для tcpdump настроены Linux capabilities.
-20. В /etc/security/denied_users добавлен root.
-21. В PAM-файлы sshd и login добавлено правило pam_listfile.
-22. В firewalld разрешён HTTP.
-23. Сохранены выводы проверочных команд.
+    1  lsblk -o NAME,TYPE,SIZE,FSTYPE,LABEL,MOUNTPOINT,MODEL,TRAN
+    2  findmnt /
+    3  nmcli -t -f NAME,DEVICE connection show --active
+    4  nmcli connection modify mephi-project-net ipv4.addresses 192.168.1.100/24
+    5  nmcli connection modify mephi-project-net ipv4.gateway 192.168.1.1
+    6  nmcli connection modify mephi-project-net ipv4.dns 8.8.8.8
+    7  nmcli connection modify mephi-project-net ipv4.method manual
+    8  nmcli connection modify mephi-project-net ipv4.ignore-auto-dns yes
+    9  nmcli connection up mephi-project-net
+   10  hostnamectl set-hostname mephi-2026.domain.local
+   11  dnf install -y nginx tcpdump libcap-ng-utils policycoreutils-python-utils sudo firewalld
+   12  dnf download --destdir=/tmp tcpdump
+   13  lsblk -f /dev/sdb
+   14  parted -s /dev/sdb mklabel gpt
+   15  parted -s /dev/sdb mkpart primary ext4 1MiB 100%
+   16  mkfs.ext4 -F -L MEPHI_DATA /dev/sdb1
+   17  mkdir -p /data/mephi-web
+   18  echo 'LABEL=MEPHI_DATA /data/mephi-web ext4 defaults 0 2' >> /etc/fstab
+   19  mount -a
+   20  groupadd -f mephi-devs
+   21  useradd -m -s /bin/bash mephi-admin
+   22  usermod -aG mephi-devs mephi-admin
+   23  echo 'mephi-admin:P@ssw0rd2026' | chpasswd
+   24  chown mephi-admin:mephi-devs /data/mephi-web
+   25  chmod 2775 /data/mephi-web
+   26  printf 'Hello from Student: M255948\n' > /data/mephi-web/index.html
+   27  systemctl enable --now nginx
+   28  nginx -t
+   29  semanage fcontext -a -t httpd_sys_content_t '/data/mephi-web(/.*)?'
+   30  restorecon -Rv /data/mephi-web
+   31  chmod u-s /usr/sbin/tcpdump
+   32  setcap cap_net_raw,cap_net_admin+ep /usr/sbin/tcpdump
+   33  install -o root -g root -m 0644 /dev/null /etc/security/denied_users
+   34  printf 'root\n' > /etc/security/denied_users
+   35  sed -i '/pam_listfile.so/d' /etc/pam.d/login
+   36  sed -i '/pam_listfile.so/d' /etc/pam.d/sshd
+   37  sed -i '2i auth required pam_listfile.so item=user sense=deny file=/etc/security/denied_users onerr=fail' /etc/pam.d/login
+   38  sed -i '2i auth required pam_listfile.so item=user sense=deny file=/etc/security/denied_users onerr=fail' /etc/pam.d/sshd
+   39  sshd -t
+   40  systemctl enable --now firewalld
+   41  firewall-cmd --permanent --add-service=http
+   42  firewall-cmd --reload
+   43  ping -c 4 192.168.1.1 > ~/network_check.txt
+   44  ping -c 4 8.8.8.8 >> ~/network_check.txt
+   45  journalctl -u nginx --since '5 minutes ago' > ~/nginx_recent_logs.txt
+   46  cp /etc/fstab ~/fstab.txt
+   47  getenforce > ~/selinux_status.txt
+   48  ls -Zd /data/mephi-web > ~/file_contexts.txt
+   49  getcap /usr/sbin/tcpdump > ~/tcpdump_capabilities.txt
+   50  stat /data/mephi-web > ~/permissions.txt
+   51  id mephi-admin > ~/users_groups.txt
+   52  getent group mephi-devs >> ~/users_groups.txt
+   53  curl -s http://192.168.1.100 > ~/curl_output.txt
+   54  cp /tmp/tcpdump-*.rpm ~/tcpdump.rpm
+   55  history > ~/project_history.txt
