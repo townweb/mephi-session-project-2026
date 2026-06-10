@@ -1,0 +1,22 @@
+firewalld-filesystem-2.4.0-2.fc44.noarch
+firewalld-2.4.0-2.fc44.noarch
+policycoreutils-python-utils-3.10-1.fc44.noarch
+nginx-filesystem-1.30.2-1.fc44.noarch
+libcap-ng-0.9.3-1.fc44.aarch64
+nginx-mimetypes-2.1.54-10.fc44.noarch
+nginx-core-1.30.2-1.fc44.aarch64
+nginx-1.30.2-1.fc44.aarch64
+libcap-ng-utils-0.9.3-1.fc44.aarch64
+libcap-ng-python3-0.9.3-1.fc44.aarch64
+tcpdump-4.99.6-3.fc44.aarch64
+
+/usr/bin/nginx
+/usr/bin/tcpdump
+/usr/bin/getcap
+
+tcpdump version 4.99.6
+libpcap version 1.10.6 (64-bit time_t, with TPACKET_V3)
+OpenSSL 3.5.5 27 Jan 2026
+64-bit build, 64-bit time_t
+
+nginx version: nginx/1.30.2

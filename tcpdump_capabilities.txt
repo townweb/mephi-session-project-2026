@@ -1,1 +1,21 @@
+-rwxr-xr-x. 1 root root 1204216 фев 13 03:00 /usr/sbin/tcpdump
+
 /usr/sbin/tcpdump cap_net_admin,cap_net_raw=ep
+
+tcpdump version 4.99.6
+libpcap version 1.10.6 (64-bit time_t, with TPACKET_V3)
+OpenSSL 3.5.5 27 Jan 2026
+64-bit build, 64-bit time_t
+
+tcpdump version 4.99.6
+libpcap version 1.10.6 (64-bit time_t, with TPACKET_V3)
+OpenSSL 3.5.5 27 Jan 2026
+64-bit build, 64-bit time_t
+Usage: tcpdump [-AbdDefghHIJKlLnNOpqStuUvxX#] [ -B size ] [ -c count ] [--count]
+		[ -C file_size ] [ -E algo:secret ] [ -F file ] [ -G seconds ]
+		[ -i interface ] [ --immediate-mode ] [ -j tstamptype ]
+		[ -M secret ] [ --number ] [ --print ] [ -Q in|out|inout ]
+		[ -r file ] [ -s snaplen ] [ -T type ] [ --version ]
+		[ -V file ] [ -w file ] [ -W filecount ] [ -y datalinktype ]
+		[ --time-stamp-precision precision ] [ --micro ] [ --nano ]
+		[ -z postrotate-command ] [ -Z user ] [ expression ]

@@ -1,0 +1,24 @@
+root
+
+-rw-r--r--. 1 root root 5 июн 11 00:19 /etc/security/denied_users
+
+  Файл: /etc/security/denied_users
+  Размер: 5         	Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 0/38	Инода: 199318      Ссылки: 1
+Доступ: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Контекст: unconfined_u:object_r:etc_t:s0
+Доступ:        2026-06-11 00:21:54.278252946 +0300
+Модифицирован: 2026-06-11 00:19:52.887660763 +0300
+Изменён:       2026-06-11 00:19:52.941660554 +0300
+Создан:        2026-06-11 00:19:52.887660763 +0300
+
+/etc/pam.d/sshd:2:auth required pam_listfile.so item=user sense=deny file=/etc/security/denied_users onerr=fail
+/etc/pam.d/login:2:auth required pam_listfile.so item=user sense=deny file=/etc/security/denied_users onerr=fail
+
+/etc/pam.d/sshd:2:auth required pam_listfile.so item=user sense=deny file=/etc/security/denied_users onerr=fail
+/etc/pam.d/sshd:3:auth       substack     password-auth
+/etc/pam.d/sshd:4:auth       include      postlogin
+/etc/pam.d/login:2:auth required pam_listfile.so item=user sense=deny file=/etc/security/denied_users onerr=fail
+/etc/pam.d/login:3:auth       substack     system-auth
+/etc/pam.d/login:4:auth       include      postlogin
+

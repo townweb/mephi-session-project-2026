@@ -1,0 +1,35 @@
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sda      8:0    0    5G  0 disk 
+sdb      8:16   0    5G  0 disk 
+└─sdb1   8:17   0    5G  0 part /data/mephi-web
+sr0     11:0    1 1024M  0 rom  
+zram0  251:0    0  3,8G  0 disk [SWAP]
+vda    253:0    0   64G  0 disk 
+├─vda1 253:1    0  600M  0 part /boot/efi
+├─vda2 253:2    0    2G  0 part /boot
+└─vda3 253:3    0 61,4G  0 part /home
+                                /
+
+NAME   FSTYPE FSVER LABEL      UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sda                                                                                
+sdb                                                                                
+└─sdb1 ext4   1.0   MEPHI_DATA 26ca6100-b28b-4a39-9968-4b56f6d4aa10    4,6G     0% /data/mephi-web
+sr0                                                                                
+zram0  swap   1     zram0      c2d4b99b-b6c9-44a5-9bb2-6b4145025421                [SWAP]
+vda                                                                                
+├─vda1 vfat   FAT32            EB0D-5C16                             561,6M     6% /boot/efi
+├─vda2 ext4   1.0              43408d0a-dff7-4b5e-ab2b-f447aa1783fd    1,4G    21% /boot
+└─vda3 btrfs        fedora     39f17627-7cfa-45de-b139-ff52dd8d347a   54,6G     8% /home
+                                                                                   /
+
+/dev/sdb1: LABEL="MEPHI_DATA" UUID="26ca6100-b28b-4a39-9968-4b56f6d4aa10" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="2980ee8d-01"
+/dev/zram0: LABEL="zram0" UUID="c2d4b99b-b6c9-44a5-9bb2-6b4145025421" TYPE="swap"
+/dev/vda2: UUID="43408d0a-dff7-4b5e-ab2b-f447aa1783fd" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="1eed0084-e0bd-48e9-8bbc-2f62f720d77e"
+/dev/vda3: LABEL="fedora" UUID="39f17627-7cfa-45de-b139-ff52dd8d347a" UUID_SUB="a82d3963-fd7c-4999-b2e6-f089783f18e2" BLOCK_SIZE="4096" TYPE="btrfs" PARTUUID="f6c6e5c3-ac3f-465a-b3c4-d6fa41ef1569"
+/dev/vda1: UUID="EB0D-5C16" BLOCK_SIZE="512" TYPE="vfat" PARTLABEL="EFI System Partition" PARTUUID="3742bec4-160c-4dcf-8378-a2351b2b03e9"
+
+TARGET          SOURCE    FSTYPE OPTIONS
+/data/mephi-web /dev/sdb1 ext4   rw,relatime,seclabel
+
+Файловая система Размер Использовано  Дост Использовано% Cмонтировано в
+/dev/sdb1          4,9G         1,3M  4,6G            1% /data/mephi-web

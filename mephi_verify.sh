@@ -2,48 +2,81 @@
 set -euo pipefail
 
 P=/home/yar/mephi-session-project-2026
+TARGET_IFACE=${TARGET_IFACE:-enp0s2}
+TARGET_HOSTNAME=mephi-2026.domain.local
 
+get_active_connection() {
+  nmcli -t -f NAME,DEVICE connection show --active | awk -F: -v iface="$TARGET_IFACE" '$2 == iface {print $1; exit}'
+}
+
+ACTIVE_CONNECTION=$(get_active_connection)
+
+# Проверка выполняется после перезагрузки и собирает состояние всех подсистем.
 {
-  echo '=== OS/HOSTNAME ==='
-  cat /etc/fedora-release
+  echo '=== HOSTNAME ==='
+  hostnamectl
   hostnamectl --static
   echo '=== NETWORK ==='
-  ip -4 addr show enp0s2
+  nmcli connection show
+  if [ -n "${ACTIVE_CONNECTION:-}" ]; then
+    nmcli -f ipv4.addresses,ipv4.gateway,ipv4.dns,ipv4.method,ipv4.ignore-auto-dns connection show "$ACTIVE_CONNECTION"
+  fi
+  ip addr show "$TARGET_IFACE"
   ip route
-  nmcli -g IP4.DNS device show enp0s2
   ping -c 4 192.168.1.1
   ping -c 4 8.8.8.8
   echo '=== DISK/FSTAB ==='
   lsblk -f
   findmnt /data/mephi-web
-  grep 'LABEL=MEPHI_DATA' /etc/fstab
+  cat /etc/fstab
+  echo '=== SOFTWARE ==='
+  rpm -q nginx tcpdump libcap-ng-utils
+  tcpdump --version
   echo '=== NGINX ==='
   systemctl is-enabled nginx
   systemctl is-active nginx
+  nginx -t
   curl -fsS http://localhost
   curl -fsS http://192.168.1.100
   echo '=== SELINUX ==='
   getenforce
-  ls -Zd /data/mephi-web /data/mephi-web/index.html
+  sestatus
+  ls -Zd /data/mephi-web
+  ls -Zd /data/mephi-web/index.html
   echo '=== DAC ==='
   stat -c '%A %a %U:%G %n' /data/mephi-web
+  stat -c '%A %a %U:%G %n' /data/mephi-web/index.html
   id mephi-admin
   getent group mephi-devs
+  sudo -l -U mephi-admin
   echo '=== CAPABILITIES ==='
   getcap /usr/sbin/tcpdump
   sudo -u mephi-admin /usr/sbin/tcpdump --help >/dev/null
   echo TCPDUMP_USER_TEST=OK
   echo '=== PAM ==='
   grep -Hn pam_listfile.so /etc/pam.d/login /etc/pam.d/sshd
-  cat /etc/ssh/denied_users
-  echo '=== PACKAGES ==='
-  rpm -q nginx tcpdump libcap-ng-utils
+  cat /etc/security/denied_users
+  stat -c '%a %U:%G %n' /etc/security/denied_users
+  echo '=== FIREWALL ==='
+  firewall-cmd --list-all
 } | tee "$P/final_verification.txt"
 
-ping -c 4 192.168.1.1 > "$P/network_check.txt"
-ping -c 4 8.8.8.8 >> "$P/network_check.txt"
-journalctl -u nginx --since '5 minutes ago' --no-pager \
-  > "$P/nginx_recent_logs.txt"
+{
+  echo '=== NETWORK ==='
+  hostnamectl
+  nmcli connection show
+  if [ -n "${ACTIVE_CONNECTION:-}" ]; then
+    nmcli -f ipv4.addresses,ipv4.gateway,ipv4.dns,ipv4.method,ipv4.ignore-auto-dns connection show "$ACTIVE_CONNECTION"
+  fi
+  ip addr show "$TARGET_IFACE"
+  ip route
+  ping -c 4 8.8.8.8
+  ping -c 4 192.168.1.1
+} | tee "$P/network_check.txt"
+
+journalctl -u nginx --since '5 minutes ago' --no-pager > "$P/nginx_recent_logs.txt"
+ip addr show "$TARGET_IFACE" > "$P/current_addresses.txt"
+ip route > "$P/current_routes.txt"
 cp /etc/fstab "$P/fstab.txt"
 getenforce > "$P/selinux_status.txt"
 ls -Zd /data/mephi-web > "$P/file_contexts.txt"

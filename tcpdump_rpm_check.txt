@@ -1,0 +1,38 @@
+/home/yar/mephi-session-project-2026-rerun-final/tcpdump.rpm: RPM v3.0 bin tcpdump-14:4.99.6-3.fc44
+
+  Файл: /home/yar/mephi-session-project-2026-rerun-final/tcpdump.rpm
+  Размер: 521473    	Блоков: 1024       Блок В/В: 4096   обычный файл
+Устройство: 0/53	Инода: 16824       Ссылки: 1
+Доступ: (0644/-rw-r--r--)  Uid: ( 1000/     yar)   Gid: ( 1000/     yar)
+Контекст: unconfined_u:object_r:user_home_t:s0
+Доступ:        2026-06-11 01:33:43.315202063 +0300
+Модифицирован: 2026-06-11 01:33:43.308202048 +0300
+Изменён:       2026-06-11 01:33:43.308202048 +0300
+Создан:        2026-06-11 01:33:43.307202046 +0300
+
+Name        : tcpdump
+Epoch       : 14
+Version     : 4.99.6
+Release     : 3.fc44
+Architecture: aarch64
+Install Date: (not installed)
+Group       : Unspecified
+Size        : 1419500
+License     : BSD-2-Clause AND BSD-3-Clause AND BSD-4-Clause AND BSD-4-Clause-UC AND ISC AND NTP
+Signature   :
+              RSA/SHA256, Пт 13 фев 2026 20:11:45, Key ID dbfcf71c6d9f90a6
+Source RPM  : tcpdump-4.99.6-3.fc44.src.rpm
+Build Date  : Пт 13 фев 2026 20:08:33
+Build Host  : buildvm-a64-12.rdu3.fedoraproject.org
+Packager    : Fedora Project
+Vendor      : Fedora Project
+URL         : http://www.tcpdump.org
+Bug URL     : https://bugz.fedoraproject.org/tcpdump
+Summary     : A network traffic monitoring tool
+Description :
+Tcpdump is a command-line tool for monitoring network traffic.
+Tcpdump can capture and display the packet headers on a particular
+network interface or on all interfaces.  Tcpdump can display all of
+the packet headers, or just the ones that match particular criteria.
+
+Install tcpdump if you need a program to monitor network traffic.

@@ -1,0 +1,75 @@
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log notice;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log /var/log/nginx/access.log main;
+
+    sendfile on;
+    tcp_nopush on;
+    keepalive_timeout 65;
+    types_hash_max_size 4096;
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name localhost 192.168.1.100 _;
+
+        root /data/mephi-web;
+        index index.html;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+    }
+}
+
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+active
+
+enabled
+
+● nginx.service - The nginx HTTP and reverse proxy server
+     Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             └─10-timeout-abort.conf
+     Active: active (running) since Thu 2026-06-11 02:00:26 MSK; 12s ago
+ Invocation: 943b992136ca4a9a82bf53665142d947
+    Process: 9723 ExecStartPre=/usr/bin/rm -f /run/nginx.pid (code=exited, status=0/SUCCESS)
+    Process: 9725 ExecStartPre=/usr/sbin/nginx -t (code=exited, status=0/SUCCESS)
+    Process: 9726 ExecStart=/usr/sbin/nginx (code=exited, status=0/SUCCESS)
+   Main PID: 9728 (nginx)
+      Tasks: 5 (limit: 4663)
+     Memory: 7.1M (peak: 7.6M)
+        CPU: 40ms
+     CGroup: /system.slice/nginx.service
+             ├─9728 "nginx: master process /usr/sbin/nginx"
+             ├─9729 "nginx: worker process"
+             ├─9730 "nginx: worker process"
+             ├─9731 "nginx: worker process"
+             └─9732 "nginx: worker process"
+
+июн 11 02:00:26 mephi-2026.domain.local systemd[1]: Starting nginx.service - The nginx HTTP and reverse proxy server...
+июн 11 02:00:26 mephi-2026.domain.local nginx[9725]: nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+июн 11 02:00:26 mephi-2026.domain.local nginx[9725]: nginx: configuration file /etc/nginx/nginx.conf test is successful
+июн 11 02:00:26 mephi-2026.domain.local systemd[1]: Started nginx.service - The nginx HTTP and reverse proxy server.
+
+Hello from Student: M255948
+
+Hello from Student: M255948
+
+Hello from Student: M255948
