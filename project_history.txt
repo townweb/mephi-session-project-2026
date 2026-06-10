@@ -1,0 +1,22 @@
+1. Сначала посмотрел, какие диски видит система. Для отдельного раздела использовал /dev/sdb.
+2. На /dev/sdb создал раздел /dev/sdb1.
+3. Раздел /dev/sdb1 отформатировал в ext4 и задал метку MEPHI_DATA.
+4. Создал каталог /data/mephi-web и настроил его монтирование через /etc/fstab.
+5. Проверил, что /data/mephi-web реально смонтирован и виден через findmnt и df.
+6. Задал имя хоста mephi-2026.domain.local.
+7. Настроил сетевые параметры: 192.168.1.100/24, шлюз 192.168.1.1 и DNS 8.8.8.8.
+8. Проверил сеть через nmcli, ip, ping и curl.
+9. Установил nginx, tcpdump и libcap-ng-utils.
+10. RPM-пакет tcpdump сохранил отдельно в tcpdump.rpm.
+11. Создал группу mephi-devs и пользователя mephi-admin.
+12. Добавил mephi-admin в группу mephi-devs.
+13. Для /data/mephi-web настроил владельца, группу и права доступа.
+14. В /data/mephi-web создал index.html с текстом Hello from Student: M255948.
+15. Настроил nginx так, чтобы он отдавал страницу из /data/mephi-web.
+16. Проверил nginx через nginx -t, systemctl и curl.
+17. Для /data/mephi-web настроил SELinux-контекст httpd_sys_content_t.
+18. Для tcpdump убрал setuid и настроил capabilities.
+19. Добавил root в /etc/security/denied_users.
+20. В PAM-файлы sshd и login добавил правило pam_listfile.
+21. В firewalld разрешил HTTP.
+22. После настройки собрал выводы команд в отдельные файлы, чтобы было проще проверить результат.
